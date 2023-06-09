@@ -1,0 +1,17 @@
+h1 {
+background-color: #439A70;
+font-family: inherit;
+font-size: 18px;
+width: 1280px;
+height: 80px;
+
+}
+form {
+    display: flex;
+    justify-content: left;
+
+}
+nav {
+    display: flex;
+    justify-content: center;
+}
