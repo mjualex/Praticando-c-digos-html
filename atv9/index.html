@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Gerenciador de Conta Bancária</title>
+</head>
+<body>
+    <h1>Gerenciador de Contas Bancárias</h1>
+
+    <div>
+        <h2>Inserir Conta Bancária</h2>
+        <label for="agencia">Agência:</label>
+        <input type="text" id="agencia"><br>
+        <label for="numero">Número da Conta:</label>
+        <input type="text" id="numero"><br>
+        <label for="tipo">Tipo de Conta:</label>
+        <select id="tipo">
+            <option value="Conta Corrente">Conta Corrente</option>
+            <option value="Conta Poupança">Conta Poupança</option>
+            <option value="Conta Universitária">Conta Universitária</option>
+        </select><br>
+        <label for="saldo">Saldo:</label>
+        <input type="text" id="saldo"><br>
+        <button onclick="inserirConta()">Inserir</button>
+    </div>
+
+    <div>
+        <h2>Deletar Conta Bancária</h2>
+        <label for="contas">Selecione a conta:</label>
+        <select id="contas"></select><br>
+        <button onclick="deletarConta()">Deletar</button>
+    </div>
+
+    <div>
+        <h2>Visualizar Contas</h2>
+        <button onclick="visualizarContas()">Visualizar</button>
+        <ul id="lista-contas"></ul>
+    </div>
+
+    <script>
+        class ContaBancaria {
+            constructor(agencia, numero, tipo, saldo) {
+                this.agencia = agencia;
+                this.numero = numero;
+                this.tipo = tipo;
+                this.saldo = saldo;
+            }
+
+            getSaldo() {
+                return this.saldo;
+            }
+
+            setSaldo(saldo) {
+                this.saldo = saldo;
+            }
+
+            sacar(valor) {
+                if (valor <= this.saldo) {
+                    this.saldo -= valor;
+                    return true;
+                }
+                return false;
+            }
+
+            depositar(valor) {
+                this.saldo += valor;
+            }
+        }
+
+        class ContaCorrente extends ContaBancaria {
+            constructor(agencia, numero, saldo, cartaoCredito) {
+                super(agencia, numero, "Conta Corrente", saldo);
+                this.cartaoCredito = cartaoCredito;
+            }
+
+            getCartaoCredito() {
+                return this.cartaoCredito;
+            }
+
+            setCartaoCredito(cartaoCredito) {
+                this.cartaoCredito = cartaoCredito;
+            }
+        }
+
+        class ContaPoupanca extends ContaBancaria {
+            constructor(agencia, numero, saldo) {
+                super(agencia, numero, "Conta Poupança", saldo);
+            }
+        }
+
+        class ContaUniversitaria extends ContaBancaria {
+            constructor(agencia, numero, saldo) {
+                super(agencia, numero, "Conta Universitária", saldo);
+            }
+
+            sacar(valor) {
+                if (valor <= 500 && valor <= this.saldo) {
+                    this.saldo -= valor;
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        const contas = [];
+
+        function inserirConta() {
+            const agencia = document.getElementById("agencia").value;
+            const numero = document.getElementById("numero").value;
+            const tipo = document.getElementById("tipo").value;
+            const saldo = parseFloat(document.getElementById("saldo").value);
+
+            let novaConta;
+
+            if (tipo === "Conta Corrente") {
+                novaConta = new ContaCorrente(agencia, numero, saldo, 0);
+            } else if (tipo === "Conta Poupança") {
+                novaConta = new ContaPoupanca(agencia, numero, saldo);
+            } else if (tipo === "Conta Universitária") {
+                novaConta = new ContaUniversitaria(agencia, numero, saldo);
+            }
+
+            contas.push(novaConta);
+        }
+
+        function deletarConta() {
+            const selectConta = document.getElementById("contas");
+            const selectedIndex = selectConta.selectedIndex;
+
+            if (selectedIndex >= 0) {
+                contas.splice(selectedIndex, 1);
+                selectConta.remove(selectedIndex);
+            }
+        }
+
+        function visualizarContas() {
+            const listaContas = document.getElementById("lista-contas");
+            listaContas.innerHTML = "";
+
+            contas.forEach((conta) => {
+                const li = document.createElement("li");
+                li.textContent = `${conta.tipo} - Agência: ${conta.agencia}, Número: ${conta.numero}, Saldo: R$ ${conta.saldo.toFixed(2)}`;
+                listaContas.appendChild(li);
+            });
+        }
+        
+    </script>
+</body>
+</html>
