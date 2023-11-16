@@ -1,0 +1,85 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 1em;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.container > div {
+    width: 48%; /* Dividir a tela na metade */
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1em;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Adicionando estilos para a área do extrato */
+#extrato {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+/* Estilo para a lista de contas criadas */
+#lista-contas {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Adicionando estilo aos campos de entrada */
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input, select {
+    margin-bottom: 10px;
+}
+
+/* Adicionando estilo aos botões */
+button {
+    background-color: #333;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
